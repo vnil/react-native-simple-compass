@@ -1,24 +1,18 @@
+
 {
   "name": "react-native-simple-compass",
   "version": "1.0.0",
-  "description": "React Native module for iOS used to receive the phones heading",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vnil/react-native-simple-compass.git"
-  },
   "keywords": [
-    "react",
-    "native",
-    "compass"
+    "react-native"
   ],
-  "author": "Viktor Nilsson <viktor@mangani.se> (http://www.viktornilsson.com/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/vnil/react-native-simple-compass/issues"
-  },
-  "homepage": "https://github.com/vnil/react-native-simple-compass#readme"
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "react-native": "*"
+  }
 }
