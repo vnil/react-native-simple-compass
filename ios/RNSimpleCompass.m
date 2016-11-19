@@ -5,6 +5,7 @@
 #import <Corelocation/CoreLocation.h>
 
 #define kHeadingUpdated @"HeadingUpdated"
+#define kDefauktHeadingFilter 1
 
 @interface RNSimpleCompass() <CLLocationManagerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -61,9 +62,11 @@
 
 #pragma mark - React
 
-RCT_EXPORT_METHOD(start) {
-    //TODO add possibility to pass settings like headingFilter
-    self.locationManager.headingFilter = 5;
+RCT_EXPORT_METHOD(start: (NSDictionary *)params) {
+    NSNumber *accuracy = [params objectForKey:@"accuracy"];
+    NSInteger headingFilter = accuracy ? [accuracy doubleValue] : kDefauktHeadingFilter;
+    RCTLogInfo(@"HAAA %d", headingFilter);
+    self.locationManager.headingFilter = headingFilter;
     [self.locationManager startUpdatingHeading];
 }
 
