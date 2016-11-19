@@ -30,23 +30,36 @@
     return self;
 }
 
+#pragma mark - RCTEventEmitter
+
 - (NSArray<NSString *> *)supportedEvents {
     return @[kHeadingUpdated];
 }
 
+#pragma mark - CLLocationManagerDelegate
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
-    [self sendEventWithName:kHeadingUpdated body:@"Event coming through"];
+    if (newHeading.headingAccuracy < 0) {
+        return;
+    }
+    [self sendEventWithName:kHeadingUpdated body:@(newHeading.trueHeading)];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
-        [self.locationManager startUpdatingHeading];
-    }
+    NSLog(@"AuthoriationStatus changed: %i", status);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     NSLog(@"Location manager failed: %@", error);
 }
+
+- (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager
+{
+    CLLocationDirection accuracy = [[manager heading] headingAccuracy];
+    return accuracy <= 0.0f || accuracy > 10.0f;
+}
+
+#pragma mark - React
 
 RCT_EXPORT_METHOD(start) {
     //TODO add possibility to pass settings like headingFilter
