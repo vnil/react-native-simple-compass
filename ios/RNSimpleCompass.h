@@ -1,7 +1,8 @@
 
 #import "RCTBridgeModule.h"
+#import "RCTEventEmitter.h"
 
-@interface RNSimpleCompass : NSObject <RCTBridgeModule>
+@interface RNSimpleCompass : RCTEventEmitter <RCTBridgeModule>
 
 @end
   
