@@ -65,7 +65,6 @@
 RCT_EXPORT_METHOD(start: (NSDictionary *)params) {
     NSNumber *accuracy = [params objectForKey:@"accuracy"];
     NSInteger headingFilter = accuracy ? [accuracy doubleValue] : kDefauktHeadingFilter;
-    RCTLogInfo(@"HAAA %d", headingFilter);
     self.locationManager.headingFilter = headingFilter;
     [self.locationManager startUpdatingHeading];
 }
