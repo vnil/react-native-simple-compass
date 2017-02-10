@@ -1,4 +1,4 @@
-#import <React/RNSimpleCompass.h>
+#import "RNSimpleCompass.h"
 #import <React/RCTEventDispatcher.h>
 #import <Corelocation/CoreLocation.h>
 
