@@ -1,6 +1,6 @@
 {
   "name": "react-native-simple-compass",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple module exposing the compass on iOS and Android",
   "main": "index.js",
   "scripts": {
