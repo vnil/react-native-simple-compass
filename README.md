@@ -39,7 +39,9 @@
 ```javascript
 import RNSimpleCompass from 'react-native-simple-compass';
 
-// TODO: What do with the module?
-RNSimpleCompass;
+const degree_update_rate = 3; // Number of degrees changed before the callback is triggered
+RNSimpleCompass.start(degree_update_rate, (degree) => {
+  console.log('You are facing', degree);
+  RNSimpleCompass.stop();
+});
 ```
-  
