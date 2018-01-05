@@ -1,4 +1,3 @@
-
 package com.reactlibrary;
 
 import android.hardware.Sensor;
@@ -14,6 +13,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.WritableMap;
 
 public class RNSimpleCompassModule extends ReactContextBaseJavaModule implements SensorEventListener {
 
@@ -21,6 +21,7 @@ public class RNSimpleCompassModule extends ReactContextBaseJavaModule implements
 
   private static Context mApplicationContext;
   private int mAzimuth = 0; // degree
+  private int mAccuracy = 0;
   private int mFilter = 1;
   private SensorManager mSensorManager;
   private Sensor mSensor;
@@ -62,7 +63,7 @@ public class RNSimpleCompassModule extends ReactContextBaseJavaModule implements
 
   @Override
   public void onSensorChanged(SensorEvent event) {
-      if( event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR ){
+      if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
           // calculate th rotation matrix
           SensorManager.getRotationMatrixFromVector(rMat, event.values);
           // get the azimuth value (orientation[0]) in degree
@@ -75,15 +76,20 @@ public class RNSimpleCompassModule extends ReactContextBaseJavaModule implements
 
           mAzimuth = newAzimuth;
 
+          WritableMap params = Arguments.createMap();
+          params.putInt("degree", mAzimuth);
+          params.putInt("accuracy", mAccuracy);
+
           getReactApplicationContext()
                   .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                  .emit("HeadingUpdated", mAzimuth);
+                  .emit("HeadingUpdated", params);
       }
   }
 
-
   @Override
   public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+      if (sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+          mAccuracy = accuracy;
+      }
   }
 }

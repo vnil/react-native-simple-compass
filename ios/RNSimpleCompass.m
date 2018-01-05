@@ -40,7 +40,7 @@
     if (newHeading.headingAccuracy < 0) {
         return;
     }
-    [self sendEventWithName:kHeadingUpdated body:@(newHeading.trueHeading)];
+    [self sendEventWithName:kHeadingUpdated body:@{@"degree": @(newHeading.trueHeading), @"accuracy": @(newHeading.headingAccuracy)}];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
