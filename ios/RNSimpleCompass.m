@@ -15,10 +15,6 @@
         if ([CLLocationManager headingAvailable]) {
             self.locationManager = [[CLLocationManager alloc] init];
             self.locationManager.delegate = self;
-            if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-                NSLog(@"Requesting permission");
-                [self.locationManager requestWhenInUseAuthorization];
-            }
         }
         else {
             NSLog(@"Heading not available");
