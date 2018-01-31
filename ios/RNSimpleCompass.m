@@ -15,10 +15,6 @@
         if ([CLLocationManager headingAvailable]) {
             self.locationManager = [[CLLocationManager alloc] init];
             self.locationManager.delegate = self;
-            if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-                NSLog(@"Requesting permission");
-                [self.locationManager requestWhenInUseAuthorization];
-            }
         }
         else {
             NSLog(@"Heading not available");
@@ -40,7 +36,7 @@
     if (newHeading.headingAccuracy < 0) {
         return;
     }
-    [self sendEventWithName:kHeadingUpdated body:@(newHeading.trueHeading)];
+    [self sendEventWithName:kHeadingUpdated body:@{@"degree": @(newHeading.trueHeading), @"accuracy": @(newHeading.headingAccuracy)}];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {

@@ -1,4 +1,3 @@
-
 import { NativeModules, NativeEventEmitter } from 'react-native';
 const { RNSimpleCompass } = NativeModules;
 
@@ -12,8 +11,8 @@ RNSimpleCompass.start = (update_rate, callback) => {
   }
 
   const compassEventEmitter = new NativeEventEmitter(RNSimpleCompass);
-  listener = compassEventEmitter.addListener('HeadingUpdated', (degree) => {
-    callback(degree);
+  listener = compassEventEmitter.addListener('HeadingUpdated', (degree, accuracy) => {
+    callback(degree, accuracy);
   });
 
   _start(update_rate === null ? 0 : update_rate);

@@ -14,6 +14,17 @@
 
 #### iOS
 
+##### Using CocoaPods
+
+To install with CocoaPods, add the following to your Podfile:
+
+```
+pod 'react-native-simple-compass', :path => '../node_modules/react-native-simple-compass'
+```
+
+Then run pod install and rebuild your project.
+
+##### Manual installation
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 2. Go to `node_modules` ➜ `react-native-simple-compass` and add `RNSimpleCompass.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNSimpleCompass.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
