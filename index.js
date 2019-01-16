@@ -14,7 +14,7 @@ RNSimpleCompass.start = (update_rate, callback) => {
   listener = compassEventEmitter.addListener("HeadingUpdated", course => {
     const correctedCourse = { ...course };
     const { height, width } = Dimensions.get("window");
-    if (width < height) correctedCourse.heading += 90;
+    if (width > height) correctedCourse.heading += 90;
     callback(correctedCourse);
   });
 
