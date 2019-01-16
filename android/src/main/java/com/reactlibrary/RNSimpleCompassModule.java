@@ -7,6 +7,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import android.content.Context;
+
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.bridge.Arguments;
 
@@ -74,10 +76,14 @@ public class RNSimpleCompassModule extends ReactContextBaseJavaModule implements
           }
 
           mAzimuth = newAzimuth;
+          WritableMap map = Arguments.createMap();
+
+          map.putDouble("heading", mAzimuth);
+          map.putDouble("accuracy",event.accuracy);
 
           getReactApplicationContext()
                   .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                  .emit("HeadingUpdated", mAzimuth);
+                  .emit("HeadingUpdated", map);
       }
   }
 

@@ -1,5 +1,4 @@
-
-import { NativeModules, NativeEventEmitter } from 'react-native';
+import { NativeModules, NativeEventEmitter, Dimensions } from "react-native";
 const { RNSimpleCompass } = NativeModules;
 
 let listener;
@@ -12,18 +11,21 @@ RNSimpleCompass.start = (update_rate, callback) => {
   }
 
   const compassEventEmitter = new NativeEventEmitter(RNSimpleCompass);
-  listener = compassEventEmitter.addListener('HeadingUpdated', (degree) => {
-    callback(degree);
+  listener = compassEventEmitter.addListener("HeadingUpdated", course => {
+    const correctedCourse = { ...course };
+    const { height, width } = Dimensions.get("window");
+    if (width < height) correctedCourse.heading += 90;
+    callback(correctedCourse);
   });
 
   _start(update_rate === null ? 0 : update_rate);
-}
+};
 
 let _stop = RNSimpleCompass.stop;
 RNSimpleCompass.stop = () => {
   listener && listener.remove();
   listener = null;
   _stop();
-}
+};
 
 export default RNSimpleCompass;
