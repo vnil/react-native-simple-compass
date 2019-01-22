@@ -15,16 +15,12 @@
         if ([CLLocationManager headingAvailable]) {
             self.locationManager = [[CLLocationManager alloc] init];
             self.locationManager.delegate = self;
-            if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-                NSLog(@"Requesting permission");
-                [self.locationManager requestWhenInUseAuthorization];
-            }
         }
         else {
             NSLog(@"Heading not available");
         }
     }
-
+    
     return self;
 }
 
@@ -40,7 +36,10 @@
     if (newHeading.headingAccuracy < 0) {
         return;
     }
-    [self sendEventWithName:kHeadingUpdated body:@(newHeading.trueHeading)];
+    [self sendEventWithName:kHeadingUpdated body:(@{
+                                                    @"heading": @(newHeading.trueHeading),
+                                                    @"accuracy": @(newHeading.headingAccuracy)
+                                                    })];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
@@ -60,6 +59,10 @@
 #pragma mark - React
 
 RCT_EXPORT_METHOD(start: (NSInteger) headingFilter) {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+        NSLog(@"Requesting permission");
+        [self.locationManager requestWhenInUseAuthorization];
+    }
     self.locationManager.headingFilter = headingFilter;
     [self.locationManager startUpdatingHeading];
 }
@@ -71,3 +74,4 @@ RCT_EXPORT_METHOD(stop) {
 RCT_EXPORT_MODULE()
 
 @end
+
