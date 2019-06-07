@@ -13,5 +13,6 @@
   "license": "",
   "devDependencies": {
     "react-native": "*"
-  }
+  },
+  "types": "./index.d.ts"
 }
